@@ -103,3 +103,36 @@
     Array.prototype.forEach.call(heads, function (h) { io.observe(h); });
   }
 })();
+
+/* Glass header once the page scrolls; mirror shine as cards arrive */
+(function () {
+  var d = document;
+  var header = d.querySelector('.site-header');
+  if (header) {
+    var ticking = false;
+    var update = function () {
+      header.classList.toggle('is-scrolled', window.scrollY > 12);
+      ticking = false;
+    };
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  }
+
+  var items = d.querySelectorAll('.feature, .store, .mark-card, .ps');
+  if (!items.length) return;
+  Array.prototype.forEach.call(items, function (el, i) {
+    el.classList.add('shine');
+    el.style.setProperty('--shine-delay', (i % 4) * 80 + 'ms');
+  });
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      en.target.classList.add('in-view');
+      io.unobserve(en.target);
+    });
+  }, { threshold: 0.35 });
+  Array.prototype.forEach.call(items, function (el) { io.observe(el); });
+})();
