@@ -1292,3 +1292,15 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
   .legal { width: auto; padding: 0; }
   .legal a { text-decoration: underline; }
 }
+
+/* Hindi name beside the header wordmark: the site shows सारथि and Sarathi together */
+.brand { display: inline-flex; align-items: center; gap: 0.55rem; }
+.brand-hi {
+  font-family: "Noto Serif Devanagari", serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1;
+  color: var(--cocoa, #2A1F14);
+  padding-left: 0.55rem;
+  border-left: 1px solid var(--sand, #EDDCC2);
+}
