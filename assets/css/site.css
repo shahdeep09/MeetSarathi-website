@@ -66,7 +66,7 @@ html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  background: var(--cream);
+  background: var(--cream) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .22 0 0 0 .12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   overflow-x: clip;
 }
 
@@ -82,37 +82,48 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
+body > main { flex: 1 0 auto; }
 
-/* Slow morning wash + film grain, behind everything */
+/* Morning light from above: two soft washes on the body that slowly
+   cross-fade (the drift) and fade toward cream down the page. The film grain
+   sits on the page canvas (html background). Nothing extends past the body,
+   so there is never extra scroll. */
 body::before,
 body::after {
   content: "";
-  position: fixed;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: min(clamp(1200px, 110vh + 30vmax, 1900px), 100%);
   pointer-events: none;
   z-index: -1;
+  -webkit-mask-image: linear-gradient(180deg, #000 42%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 42%, transparent 92%);
 }
 body::before {
-  inset: -12vmax;
   background:
-    radial-gradient(42vmax 34vmax at 16% 18%, var(--wash-peach), transparent 70%),
-    radial-gradient(38vmax 30vmax at 86% 24%, var(--wash-gold), transparent 70%),
-    radial-gradient(36vmax 30vmax at 22% 84%, var(--wash-coral), transparent 70%),
-    radial-gradient(40vmax 32vmax at 84% 80%, var(--wash-rose), transparent 70%),
-    radial-gradient(56vmax 40vmax at 50% 50%, rgba(255, 253, 249, 0.6), transparent 75%);
-  animation: wash-drift 70s var(--ease) infinite alternate;
-  will-change: transform;
+    radial-gradient(40vmax 30vmax at 26% 10%, var(--wash-gold), transparent 70%),
+    radial-gradient(42vmax 32vmax at 80% 14%, var(--wash-peach), transparent 70%),
+    radial-gradient(38vmax 30vmax at 10% 46%, var(--wash-rose), transparent 70%),
+    radial-gradient(38vmax 30vmax at 92% 52%, var(--wash-coral), transparent 70%);
 }
 body::after {
-  inset: 0;
-  opacity: 0.32;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .32 0 0 0 0 .22 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background:
+    radial-gradient(44vmax 34vmax at 8% 12%, var(--wash-peach), transparent 70%),
+    radial-gradient(40vmax 30vmax at 94% 16%, var(--wash-gold), transparent 70%),
+    radial-gradient(36vmax 30vmax at 16% 54%, var(--wash-coral), transparent 70%),
+    radial-gradient(40vmax 30vmax at 88% 60%, var(--wash-rose), transparent 70%),
+    radial-gradient(56vmax 36vmax at 50% 34%, rgba(255, 253, 249, 0.5), transparent 75%);
+  animation: wash-drift 36s var(--ease) infinite alternate;
 }
 @keyframes wash-drift {
-  0%   { transform: translate3d(0, 0, 0) scale(1); }
-  50%  { transform: translate3d(3vmax, -2vmax, 0) scale(1.04); }
-  100% { transform: translate3d(-2vmax, 2vmax, 0) scale(1.02); }
+  from { opacity: 1; }
+  to   { opacity: 0.25; }
 }
 
 img, svg { display: block; max-width: 100%; height: auto; }
@@ -281,7 +292,7 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
     left: var(--gutter);
     right: var(--gutter);
     padding: 8px;
-    background: rgba(255, 253, 249, 0.96);
+    background: var(--card);
     border: 1px solid var(--line);
     border-radius: 22px;
     box-shadow: 0 24px 48px -28px rgba(80, 50, 20, 0.45);
@@ -989,8 +1000,12 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
 /* ---------- Closing line --------------------------------------------------- */
 
 .closing {
-  padding-block: clamp(3rem, 6vw, 6rem) clamp(3rem, 5vw, 5rem);
+  padding-block: clamp(4rem, 8vw, 8rem) clamp(3.5rem, 6vw, 6rem);
   text-align: center;
+  background:
+    radial-gradient(48% 70% at 30% 70%, var(--wash-coral), transparent 70%),
+    radial-gradient(50% 75% at 70% 60%, var(--wash-peach), transparent 70%),
+    radial-gradient(40% 60% at 85% 85%, var(--wash-rose), transparent 70%);
 }
 .closing p {
   font-family: var(--serif);
@@ -1090,8 +1105,8 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
 .legal h2 {
   font-size: clamp(1.625rem, 1.45rem + 0.7vw, 2rem);
   line-height: 1.15;
-  margin: 2.6em 0 0.7em;
-  padding-top: 1.1em;
+  margin: 1.7em 0 0.6em;
+  padding-top: 0.95em;
   border-top: 1px solid var(--line);
   scroll-margin-top: 24px;
   font-variant-numeric: lining-nums tabular-nums;
@@ -1102,7 +1117,7 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
 .legal h3 {
   font-size: clamp(1.25rem, 1.18rem + 0.3vw, 1.4375rem);
   line-height: 1.2;
-  margin: 1.9em 0 0.5em;
+  margin: 1.5em 0 0.45em;
   scroll-margin-top: 24px;
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -1262,7 +1277,7 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  body::before { animation: none; }
+  body::before, body::after { animation: none; }
   .flame { animation: none; }
   .flame-kindle { animation: kindle 600ms var(--ease) both; }
   *, *::before, *::after { transition-duration: 1ms !important; }
