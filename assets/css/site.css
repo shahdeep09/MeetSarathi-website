@@ -1,7 +1,8 @@
 /* =========================================================================
    सारथि Sarathi · meetsarathi.com
    One stylesheet. No build step.
-   Brand rules: Kanku only once per view (the flame). Cocoa is the text colour
+   Owner rule (17 Oct 2026): the red bindi (kanku flame) stays on every logo, at every size.
+   Brand rules: Kanku is kept for the bindi. Cocoa is the text colour
    on cream. Kesar is a fill and stroke colour here (it is below AA as text on
    cream). No shadows or gradients on the mark. Motion is gentle (>= 400ms,
    ease-in-out); only the flame moves continuously; reduced motion is honoured.
@@ -217,7 +218,7 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
   text-decoration: none;
   border-radius: 8px;
 }
-.brand img { height: 32px; width: auto; }
+.brand img { height: 44px; width: auto; }
 
 .site-nav ul {
   list-style: none;
@@ -508,7 +509,7 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
   justify-content: space-between;
   margin-top: 18px;
 }
-.ps-head img { height: 18px; width: auto; }
+.ps-head img { height: 24px; width: auto; }
 .ps-date { font-size: 12px; color: var(--muted); font-weight: 500; }
 .ps-greet {
   margin-top: 10px;
@@ -1293,14 +1294,3 @@ h1 .deva, h2 .deva, h3 .deva, summary .deva { font-size: 0.82em; font-weight: 50
   .legal a { text-decoration: underline; }
 }
 
-/* Hindi name beside the header wordmark: the site shows सारथि and Sarathi together */
-.brand { display: inline-flex; align-items: center; gap: 0.55rem; }
-.brand-hi {
-  font-family: "Noto Serif Devanagari", serif;
-  font-weight: 600;
-  font-size: 1.3rem;
-  line-height: 1;
-  color: var(--cocoa, #2A1F14);
-  padding-left: 0.55rem;
-  border-left: 1px solid var(--sand, #EDDCC2);
-}
